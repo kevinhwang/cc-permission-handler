@@ -2,7 +2,7 @@ module cc-permission-handler
 
 go 1.26.1
 
-require mvdan.cc/sh/v3 v3.10.0
+require mvdan.cc/sh/v3 v3.13.0
 
 require (
 	github.com/bmatcuk/doublestar/v4 v4.10.0
