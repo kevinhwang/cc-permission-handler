@@ -1,0 +1,20 @@
+edition = "2023";
+package config.v1;
+
+option go_package = "cc-permission-handler/gen/config/v1";
+
+message Config {
+  repeated Project projects = 1;
+}
+
+message Project {
+  repeated string path_patterns = 1;
+  repeated string allow_write_patterns = 2;
+  bool allow_project_write = 3;
+  repeated RemoteHost remote_hosts = 4;
+}
+
+message RemoteHost {
+  repeated string host_patterns = 1;
+  repeated string allow_write_patterns = 2;
+}
