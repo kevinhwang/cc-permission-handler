@@ -1,0 +1,41 @@
+edition = "2023";
+package config.v1;
+
+option go_package = "cc-permission-handler/internal/gen/config/v1";
+
+import "rules/v1/rules.proto";
+
+message Config {
+  repeated Project projects = 1;
+}
+
+message Project {
+  repeated string path_patterns = 1;
+  repeated string allow_write_patterns = 2;
+  bool allow_project_write = 3;
+  repeated RemoteHost remote_hosts = 4;
+
+  // Which command rules to use for this project.
+  oneof command_rules {
+    UseDefaultRules use_default_rules = 5;
+    CustomCommandRules custom_command_rules = 6;
+  }
+
+  // When true, simple uses of bash utilities (cat, grep, find, sed, etc.)
+  // are denied with a message suggesting the equivalent Claude Code native
+  // tool (Read, Grep, Glob, Edit). Default false.
+  bool prefer_native_tools = 7;
+}
+
+// Use the compiled-in default rules.
+message UseDefaultRules {}
+
+// User-defined command specs.
+message CustomCommandRules {
+  rules.v1.RuleSet rule_set = 1;
+}
+
+message RemoteHost {
+  repeated string host_patterns = 1;
+  repeated string allow_write_patterns = 2;
+}
